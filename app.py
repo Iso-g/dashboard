@@ -639,6 +639,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--port", type=int, default=8050, help="Host port for the Dash server."
     )
+    parser.add_argument(
+        "--debug",
+        action="store_true",
+        help="Run Dash with debug mode (enable reloader and hot reload).",
+    )
     return parser.parse_args()
 
 
@@ -649,7 +654,11 @@ def main() -> None:
         wafer_path=args.wafer,
         waveform_path=args.waveform,
     )
-    app.run(debug=True, port=args.port)
+    app.run(
+        debug=args.debug,
+        port=args.port,
+        use_reloader=args.debug,
+    )
 
 
 if __name__ == "__main__":
